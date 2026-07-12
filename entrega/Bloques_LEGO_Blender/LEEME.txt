@@ -1,0 +1,31 @@
+PROYECTO: Bloques LEGO 3D en Blender
+=====================================
+
+Contenido del paquete
+---------------------
+- bloques.blend        Escena completa: 3 bricks LEGO 2x4 (blanco, azul y rojo,
+                       el blanco encajado sobre el azul), materiales de plastico
+                       ABS, fondo blanco infinito (ciclorama), iluminacion de
+                       estudio de 3 puntos y camara ya configurada.
+- bloques_render.png   Render final (2560 x 1440, motor EEVEE).
+
+Como abrirlo
+------------
+1. Abrir "bloques.blend" con Blender 5.1 o superior (gratis en blender.org).
+   El archivo se hizo en Blender 5.1.2. Versiones algo anteriores (4.x) suelen
+   abrirlo igual, pero puede variar algun material.
+2. Al abrir ya esta todo listo: no hay que configurar nada.
+
+Como renderizar
+---------------
+1. Pulsar F12 (Render > Render Image). Tarda 1-2 segundos (EEVEE).
+2. Guardar la imagen con Image > Save As dentro de la ventana de render.
+
+Notas tecnicas
+--------------
+- Archivo autocontenido: no usa texturas ni archivos externos.
+- Escala: 1 unidad = 10 mm (brick 2x4 real: 32 x 16 x 9.6 mm, studs de 4.8 mm).
+- El brick blanco esta alineado a la rejilla de studs del azul (desplazado
+  2 studs a lo largo y 1 fila lateral), como un encaje LEGO real.
+- Vista: la camara principal ya esta activa (tecla 0 del teclado numerico
+  para volver a ella si se cambia la vista).

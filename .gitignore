@@ -1,0 +1,6 @@
+*.blend1
+entrega/*.zip
+__pycache__/
+.DS_Store
+Thumbs.db
+.claude/
