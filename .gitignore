@@ -4,3 +4,11 @@ __pycache__/
 .DS_Store
 Thumbs.db
 .claude/
+
+# entorno y salidas generadas
+.venv/
+salida/
+*.egg-info/
+.pytest_cache/
+build/
+entrega/**/*.png
