@@ -82,6 +82,12 @@ def test_validar_escenas_incluidas(capsys):
     assert salida.count("OK ") == 2
 
 
+def test_validar_expande_comodines_como_en_powershell(capsys):
+    # PowerShell pasa "escenas/*.json" literal; la CLI lo expande.
+    assert cli.main(["validar", str(RAIZ / "escenas" / "*.json")]) == 0
+    assert capsys.readouterr().out.count("OK ") == len(list((RAIZ / "escenas").glob("*.json")))
+
+
 def test_validar_escena_rota(tmp_path, capsys):
     ruta = tmp_path / "mala.json"
     ruta.write_text(json.dumps({"piezas": [

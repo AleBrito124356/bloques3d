@@ -208,9 +208,18 @@ def cmd_comprobar(args: argparse.Namespace) -> int:
     return 0 if informe["ok"] else 1
 
 
+def _expandir(patrones: list[str]) -> list[str]:
+    """Expande comodines (PowerShell y cmd no lo hacen por nosotros)."""
+    rutas: list[str] = []
+    for p in patrones:
+        coincidencias = sorted(glob.glob(p)) if any(c in p for c in "*?[") else []
+        rutas += coincidencias or [p]
+    return rutas
+
+
 def cmd_validar(args: argparse.Namespace) -> int:
     fallos = 0
-    for ruta in args.escenas:
+    for ruta in _expandir(args.escenas):
         try:
             escena = cargar_escena(ruta)
         except EscenaInvalida as e:
