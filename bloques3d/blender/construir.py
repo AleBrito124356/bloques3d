@@ -30,7 +30,7 @@ from bloques3d.encuadre import distancia_orbita, encuadrar  # noqa: E402
 from bloques3d.escena import Escena, EscenaInvalida, cargar_escena  # noqa: E402
 from bloques3d.opciones import anadir_opciones_render  # noqa: E402
 from bloques3d.paleta import PALETA  # noqa: E402
-from bloques3d.blender import estudio, malla  # noqa: E402
+from bloques3d.blender import estudio, exportar, malla  # noqa: E402
 
 MARCA = "BLOQUES3D_RESULTADO"
 
@@ -150,6 +150,33 @@ def main(argv: list[str]) -> int:
             resultado["jpg"] = str(jpg)
             log(f"copia JPEG -> {jpg}")
         scene.render.filepath = f"//{escena.nombre}.png"
+
+    if args.stl:
+        t = time.perf_counter()
+        piezas = sorted({c.pieza for c in escena.piezas}, key=lambda p: p.clave)
+        resultado["stl"] = exportar.exportar_stl(piezas, Path(args.stl).resolve())
+        tiempos["stl"] = round(time.perf_counter() - t, 2)
+        log(f"{len(resultado['stl'])} STL -> {Path(args.stl).resolve()}")
+
+    if args.glb:
+        t = time.perf_counter()
+        resultado["glb"] = exportar.exportar_glb(objetos, Path(args.glb).resolve())
+        tiempos["glb"] = round(time.perf_counter() - t, 2)
+        log(f"GLB -> {resultado['glb']}")
+
+    if args.turntable:
+        t = time.perf_counter()
+        cfg = escena.camara
+        (x0, y0, z0), (x1, y1, z1) = escena.caja()
+        centro = Vector(((x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2))
+        dist = distancia_orbita(escena.puntos(), tuple(centro), cfg.elevacion, cfg.lente,
+                                ancho / alto, cfg.margen)
+        exportar.preparar_giro(scene, cam, centro, dist, cfg.azimut, cfg.elevacion, args.turntable)
+        mp4 = exportar.render_giro(scene, salida / f"{escena.nombre}_giro.mp4")
+        tiempos["turntable"] = round(time.perf_counter() - t, 2)
+        resultado["mp4"] = mp4
+        resultado["fotogramas"] = args.turntable
+        log(f"vídeo de {args.turntable} fotogramas en {tiempos['turntable']} s -> {mp4}")
 
     tiempos["total"] = round(time.perf_counter() - t0, 2)
     resultado["tiempos"] = tiempos

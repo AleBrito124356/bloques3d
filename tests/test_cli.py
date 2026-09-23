@@ -47,20 +47,22 @@ def test_windows_elige_la_version_mas_nueva(tmp_path):
 
 
 def args_render(**kw):
-    base = dict(res=(640, 360), muestras=16, motor="eevee", salida="salida", jpeg=False, sin_render=False)
+    base = dict(res=(640, 360), muestras=16, motor="eevee", salida="salida", jpeg=False, sin_render=False,
+                stl=None, glb=None, turntable=None)
     return argparse.Namespace(**{**base, **kw})
 
 
 def test_comando_siempre_sin_interfaz_y_de_fabrica(tmp_path):
     cmd = cli.comando_blender(Path("blender"), tmp_path / "e.json",
-                              args_render(jpeg=True, motor="cycles"))
+                              args_render(stl="stl", glb="x.glb", turntable=24, jpeg=True, motor="cycles"))
     assert cmd[1:3] == ["--background", "--factory-startup"]
     assert cmd[cmd.index("--python") + 1] == str(cli.SCRIPT_BLENDER)
     tras = cmd[cmd.index("--") + 1:]
     assert tras[tras.index("--res") + 1] == "640x360"
     assert tras[tras.index("--motor") + 1] == "cycles"
+    assert tras[tras.index("--turntable") + 1] == "24"
     assert "--jpeg" in tras
-    assert Path(tras[tras.index("--salida") + 1]).is_absolute()
+    assert Path(tras[tras.index("--stl") + 1]).is_absolute()
 
 
 @pytest.mark.parametrize("texto, esperado", [("1920x1080", (1920, 1080)), (" 640X360 ", (640, 360))])
@@ -117,7 +119,7 @@ def test_render_lee_el_resultado_de_blender(tmp_path, monkeypatch, capsys):
     exe = exe_falso(tmp_path / "blender.exe")
     visto = {}
     resultado = {"blend": str(tmp_path / "trio.blend"), "png": str(tmp_path / "trio.png"),
-                 "tiempos": {"render": 1.5, "total": 2.0}}
+                 "stl": [str(tmp_path / "ladrillo_2x4.stl")], "tiempos": {"render": 1.5, "total": 2.0}}
 
     def popen(cmd, **kw):
         visto["cmd"] = cmd
@@ -130,7 +132,7 @@ def test_render_lee_el_resultado_de_blender(tmp_path, monkeypatch, capsys):
     assert rc == 0
     assert visto["cmd"][:3] == [str(exe), "--background", "--factory-startup"]
     assert "[bloques3d] construyendo" in out and "Fra:1" not in out
-    assert "trio.png" in out and "trio.blend" in out and "render 1.5" in out
+    assert "trio.png" in out and "ladrillo_2x4.stl" in out and "render 1.5" in out
 
 
 def test_render_error_de_blender_muestra_la_cola(tmp_path, monkeypatch, capsys):

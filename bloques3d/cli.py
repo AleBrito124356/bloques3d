@@ -97,6 +97,12 @@ def comando_blender(exe: Path, escena: Path, args: argparse.Namespace) -> list[s
         cmd.append("--jpeg")
     if args.sin_render:
         cmd.append("--sin-render")
+    if args.stl:
+        cmd += ["--stl", str(Path(args.stl).resolve())]
+    if args.glb:
+        cmd += ["--glb", str(Path(args.glb).resolve())]
+    if args.turntable:
+        cmd += ["--turntable", str(args.turntable)]
     return cmd
 
 
@@ -143,9 +149,11 @@ def cmd_render(args: argparse.Namespace) -> int:
             print(f"  | {linea}", file=sys.stderr)
         return codigo or 1
     print("archivos:")
-    for clave in ("blend", "png", "jpg"):
+    for clave in ("blend", "png", "jpg", "glb", "mp4"):
         if clave in resultado:
             print(f"  {clave:5} {_relativa(resultado[clave])}")
+    for stl in resultado.get("stl", []):
+        print(f"  stl   {_relativa(stl)}")
     print("tiempos (s): " + ", ".join(f"{k} {v}" for k, v in resultado["tiempos"].items()))
     return 0
 

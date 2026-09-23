@@ -32,7 +32,7 @@ def _entero_en(minimo: int, maximo: int, nombre: str):
 
 def anadir_opciones_render(p: argparse.ArgumentParser) -> None:
     p.add_argument("--salida", default="salida",
-                   help="carpeta donde se escriben <escena>.blend, .png y .jpg (por defecto: salida)")
+                   help="carpeta donde se escriben <escena>.blend, .png, .jpg y .mp4 (por defecto: salida)")
     p.add_argument("--res", type=resolucion, default=(1920, 1080), metavar="ANCHOxALTO",
                    help="resolución del render (por defecto 1920x1080)")
     p.add_argument("--muestras", type=_entero_en(1, 4096, "--muestras"), default=64,
@@ -40,4 +40,8 @@ def anadir_opciones_render(p: argparse.ArgumentParser) -> None:
     p.add_argument("--motor", choices=MOTORES, default="eevee", help="motor de render (por defecto eevee)")
     p.add_argument("--jpeg", action="store_true", help="guardar también una copia JPEG (calidad 90)")
     p.add_argument("--sin-render", action="store_true",
-                   help="solo construir y guardar el .blend")
+                   help="solo construir y guardar el .blend (y las exportaciones pedidas)")
+    p.add_argument("--stl", metavar="CARPETA", help="exportar cada tipo de pieza como STL binario en mm")
+    p.add_argument("--glb", metavar="ARCHIVO", help="exportar la escena completa como GLB (glTF binario)")
+    p.add_argument("--turntable", "--giro", dest="turntable", type=_entero_en(2, 2000, "--turntable"),
+                   metavar="FOTOGRAMAS", help="renderizar además un vídeo MP4 de una vuelta completa")

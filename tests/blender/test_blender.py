@@ -15,6 +15,7 @@ from pathlib import Path
 import pytest
 
 from bloques3d.cli import ARGS_SEGUROS, BlenderNoEncontrado, buscar_blender
+from tests.stl import leer_stl
 
 RAIZ = Path(__file__).resolve().parents[2]
 AQUI = Path(__file__).resolve().parent
@@ -63,11 +64,20 @@ def tamano_png(ruta: Path) -> tuple[int, int]:
     return struct.unpack(">II", cab[16:24])
 
 
+def leer_glb(ruta: Path) -> dict:
+    datos = ruta.read_bytes()
+    magia, version, largo = struct.unpack_from("<4sII", datos, 0)
+    assert (magia, version, largo) == (b"glTF", 2, len(datos))
+    largo_json, tipo = struct.unpack_from("<I4s", datos, 12)
+    assert tipo == b"JSON"
+    return json.loads(datos[20:20 + largo_json])
+
+
 @pytest.fixture(scope="session")
 def trio(blender, tmp_path_factory) -> Path:
     d = tmp_path_factory.mktemp("trio")
     cli("render", "escenas/trio.json", "--res", "640x360", "--muestras", "16", "--salida", d,
-        "--jpeg", "--blender", blender)
+        "--stl", d / "stl", "--glb", d / "trio.glb", "--jpeg", "--blender", blender)
     return d
 
 
@@ -150,7 +160,32 @@ def test_trio_blend_portable(trio, blender):
     assert datos["rutas_absolutas"] == []
 
 
-# --- Otras escenas y motores ---------------------------------------------------------------
+def test_trio_stl_en_milimetros_y_estanco(trio):
+    stl = leer_stl(trio / "stl" / "ladrillo_2x4.stl")
+    assert len(stl) > 500
+    assert stl.dimensiones() == pytest.approx((31.8, 15.8, 11.3), abs=0.01)
+    assert stl.caja()[0][2] == pytest.approx(0.0, abs=1e-6)
+    assert stl.aristas_no_cerradas() == 0
+    assert stl.triangulos_degenerados() == 0
+
+
+def test_trio_glb_un_nodo_por_pieza(trio):
+    gltf = leer_glb(trio / "trio.glb")
+    nodos = {n["name"]: n for n in gltf["nodes"]}
+    piezas = {n for n in nodos if n in ("azul", "blanco", "rojo")}
+    assert piezas == {"azul", "blanco", "rojo"}
+    assert sum(1 for n in gltf["nodes"] if "mesh" in n) == 3
+    raiz = nodos["bloques3d"]
+    assert raiz["scale"] == pytest.approx([0.001] * 3)      # mm -> m (la unidad de glTF)
+    assert {gltf["nodes"][i]["name"] for i in raiz["children"]} == {"azul", "blanco", "rojo"}
+    nombres_mat = {m["name"] for m in gltf["materials"]}
+    assert {"ABS_azul", "ABS_blanco", "ABS_rojo"} <= nombres_mat
+    # blanco apoya en el azul: su nodo esta 9.6 mm mas arriba (Y es arriba en glTF)
+    assert nodos["blanco"]["translation"][1] == pytest.approx(9.6, abs=1e-4)
+    assert nodos["azul"].get("translation", [0, 0, 0])[1] == pytest.approx(0.0, abs=1e-6)
+
+
+# --- Otras escenas, motores y video ---------------------------------------------------------
 
 def test_casita_valida_en_blender(blender, tmp_path):
     cli("render", "escenas/casita.json", "--sin-render", "--salida", tmp_path, "--blender", blender)
@@ -164,6 +199,16 @@ def test_cycles_tambien_renderiza(blender, tmp_path):
     cli("render", "escenas/trio.json", "--motor", "cycles", "--res", "160x90", "--muestras", "4",
         "--salida", tmp_path, "--blender", blender)
     assert tamano_png(tmp_path / "trio.png") == (160, 90)
+
+
+def test_video_giratorio_de_24_fotogramas(blender, tmp_path):
+    cli("render", "escenas/trio.json", "--sin-render", "--res", "320x180", "--muestras", "4",
+        "--turntable", "24", "--salida", tmp_path, "--blender", blender)
+    mp4 = tmp_path / "trio_giro.mp4"
+    assert mp4.is_file() and mp4.stat().st_size > 1000
+    datos = en_blender(blender, AQUI / "inspeccionar_video.py", mp4)
+    assert datos["fotogramas"] == 24
+    assert datos["tamano"] == [320, 180]
 
 
 def test_escena_invalida_no_llega_a_blender(tmp_path):
