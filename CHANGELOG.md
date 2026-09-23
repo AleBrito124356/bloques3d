@@ -19,7 +19,7 @@ máquina.
   `--turntable` (MP4 en bucle).
 - `python -m bloques3d comprobar`: encuadre, suelo, interpenetración y mallas
   cerradas sobre cualquier `.blend`.
-- `validar`, `catalogo` y `blender` en la CLI; 135 pruebas, 19 de ellas con
+- `validar`, `catalogo` y `blender` en la CLI; 136 pruebas, 20 de ellas con
   Blender real.
 - README, galería y paquete de entrega regenerado.
 

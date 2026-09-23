@@ -212,7 +212,7 @@ interfaz y comprueba la malla **evaluada** (con el bisel):
 
 ```text
 $ python -m bloques3d comprobar salida/casita.blend
-encuadre   u 0.152..0.849   v 0.061..0.939   (margen exigido 0.03)
+encuadre   u 0.151..0.849   v 0.061..0.939   (margen exigido 0.03)
 suelo      3 piezas con z mínima = 0, 0, 0
 contactos  53 pares de piezas que se tocan; con 1 micra de separación se cruzan 0 pares de caras; vértices enterrados: 0
 manifold   0 aristas abiertas en 13 mallas
@@ -246,7 +246,7 @@ python -m bloques3d render escenas/trio.json --res 640x360 --muestras 16 --turnt
 ## Pruebas
 
 ```bash
-python -m pytest -q                   # todo: 135 pruebas, alrededor de 1 minuto
+python -m pytest -q                   # todo: 136 pruebas, alrededor de 1 minuto
 python -m pytest -q -m "not blender"  # solo Python puro: 116 pruebas, unos 10 s
 ```
 
