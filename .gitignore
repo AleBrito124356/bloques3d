@@ -11,3 +11,4 @@ salida/
 *.egg-info/
 .pytest_cache/
 build/
+entrega/**/*.png

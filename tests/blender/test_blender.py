@@ -118,8 +118,8 @@ def test_apilados_encajan_sin_atravesarse(piezas, nombre):
 
 
 def test_el_comprobador_detecta_los_fallos_de_la_escena_original(blender):
-    """El .blend original flota 4.8 mm, se atraviesa y se sale del encuadre."""
-    informe = comprobar(RAIZ / "blend" / "bloques.blend",
+    """El .blend original (historial/) flota 4.8 mm, se atraviesa y se sale del encuadre."""
+    informe = comprobar(RAIZ / "historial" / "bloques_original.blend",
                         "--piezas", "Brick_Blue,Brick_White,Brick_Red", "--suelo", "Brick_Blue,Brick_Red",
                         "--blender", blender)
     assert not informe["ok"]

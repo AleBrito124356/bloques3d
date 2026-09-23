@@ -3,29 +3,46 @@ PROYECTO: Bloques LEGO 3D en Blender
 
 Contenido del paquete
 ---------------------
-- bloques.blend        Escena completa: 3 bricks LEGO 2x4 (blanco, azul y rojo,
-                       el blanco encajado sobre el azul), materiales de plastico
-                       ABS, fondo blanco infinito (ciclorama), iluminacion de
-                       estudio de 3 puntos y camara ya configurada.
-- bloques_render.png   Render final (2560 x 1440, motor EEVEE).
+- trio.blend   Escena completa, generada con bloques3d a partir de
+               escenas/trio.json: 3 ladrillos 2x4 (azul, blanco y rojo) con
+               geometria real (hueco inferior de 1.2 mm de pared, 3 tubos,
+               8 studs de 4.8 mm), plastico ABS con capa de barniz, fondo
+               infinito, 3 luces y camara encuadrada automaticamente.
+- trio.jpg     Render de ese archivo (1920 x 1080, Cycles, 64 muestras).
+
+Que hay en la escena
+--------------------
+- El azul y el rojo apoyan en el suelo: su punto mas bajo esta en z = 0.
+- El blanco esta encajado sobre el azul: desplazado 2 studs a lo largo y
+  1 fila hacia un lado, asi que 2 studs del azul entran en su hueco
+  inferior. Las piezas se tocan pero no se atraviesan: con 1 micra de
+  separacion no se cruza ninguna cara y ningun vertice de una queda dentro
+  de la otra.
+- El rojo esta suelto en el suelo, girado 9 grados.
+- Profundidad de campo real de f/22, enfocada en el ladrillo azul.
 
 Como abrirlo
 ------------
-1. Abrir "bloques.blend" con Blender 5.1 o superior (gratis en blender.org).
-   El archivo se hizo en Blender 5.1.2. Versiones algo anteriores (4.x) suelen
-   abrirlo igual, pero puede variar algun material.
-2. Al abrir ya esta todo listo: no hay que configurar nada.
+1. Abrir "trio.blend" con Blender 5.0 o superior (se genero con 5.2.1).
+2. Escala: 1 unidad = 1 mm (la interfaz de Blender muestra mm).
+3. Al abrir ya esta todo listo: la camara activa es la del render.
 
 Como renderizar
 ---------------
-1. Pulsar F12 (Render > Render Image). Tarda 1-2 segundos (EEVEE).
-2. Guardar la imagen con Image > Save As dentro de la ventana de render.
+1. Pulsar F12 (Render > Render Image). Esta configurado para Cycles en CPU,
+   1920 x 1080, 64 muestras y eliminacion de ruido.
+   Lo que tarda depende del equipo: en el PC donde se genero (Intel UHD 770,
+   sin tarjeta grafica dedicada) tardo 94 segundos.
+2. Guardar con Image > Save As.
 
-Notas tecnicas
---------------
-- Archivo autocontenido: no usa texturas ni archivos externos.
-- Escala: 1 unidad = 10 mm (brick 2x4 real: 32 x 16 x 9.6 mm, studs de 4.8 mm).
-- El brick blanco esta alineado a la rejilla de studs del azul (desplazado
-  2 studs a lo largo y 1 fila lateral), como un encaje LEGO real.
-- Vista: la camara principal ya esta activa (tecla 0 del teclado numerico
-  para volver a ella si se cambia la vista).
+Regenerarlo desde cero
+----------------------
+Desde la raiz del repositorio (ver README.md):
+
+  python -m bloques3d render escenas/trio.json --motor cycles --res 1920x1080 --muestras 64 --jpeg --salida entrega/Bloques_LEGO_Blender
+
+(escribe tambien trio.png, que no se guarda en el repositorio)
+
+Comprobar la geometria del archivo:
+
+  python -m bloques3d comprobar entrega/Bloques_LEGO_Blender/trio.blend
