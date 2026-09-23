@@ -151,6 +151,12 @@ def test_trio_geometria_en_el_blend(trio, blender):
     assert c["pares_1um"] == 0 and c["vertices_enterrados"] == 0
 
 
+def test_regenerar_no_deja_copias_blend1(blender, tmp_path):
+    for _ in range(2):
+        cli("render", "escenas/trio.json", "--sin-render", "--salida", tmp_path, "--blender", blender)
+    assert sorted(p.name for p in tmp_path.iterdir()) == ["trio.blend"]
+
+
 def test_trio_blend_portable(trio, blender):
     datos = en_blender(blender, AQUI / "inspeccionar_blend.py", blend=trio / "trio.blend")
     assert datos["render_filepath"] == "//trio.png"         # ruta relativa al .blend

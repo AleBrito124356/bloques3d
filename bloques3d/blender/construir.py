@@ -128,6 +128,9 @@ def main(argv: list[str]) -> int:
     # El render se guarda junto al .blend con ruta relativa ("//"), asi el
     # archivo funciona en cualquier PC.
     blend = salida / f"{escena.nombre}.blend"
+    # Sin copias .blend1 al regenerar. Solo afecta a esta sesion: con
+    # --factory-startup en segundo plano las preferencias no se guardan.
+    bpy.context.preferences.filepaths.save_version = 0
     scene.render.filepath = f"//{escena.nombre}.png"
     estudio.configurar_salida_imagen(scene, "PNG")
     bpy.ops.wm.save_as_mainfile(filepath=str(blend), compress=True, relative_remap=True)
