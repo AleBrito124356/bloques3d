@@ -1,0 +1,23 @@
+{
+  "nombre": "catalogo",
+  "descripcion": "Las 12 piezas del catálogo de serie en el suelo, en tres filas: ladrillos, placas y baldosas. Útil para ver proporciones y colores de la paleta.",
+  "camara": {"azimut": 24, "elevacion": 38, "lente": 70, "margen": 0.05},
+  "fondo": "#ECEDEF",
+  "piezas": [
+    {"id": "ladrillo_1x1", "pieza": "ladrillo_1x1", "color": "amarillo",    "pos": [0, 8]},
+    {"id": "ladrillo_1x2", "pieza": "ladrillo_1x2", "color": "naranja",     "pos": [2, 8]},
+    {"id": "ladrillo_1x4", "pieza": "ladrillo_1x4", "color": "rojo",        "pos": [5, 8]},
+    {"id": "ladrillo_2x2", "pieza": "ladrillo_2x2", "color": "rosa",        "pos": [10, 8]},
+    {"id": "ladrillo_2x3", "pieza": "ladrillo_2x3", "color": "azul_claro",  "pos": [13, 8]},
+    {"id": "ladrillo_2x4", "pieza": "ladrillo_2x4", "color": "azul",        "pos": [17, 8]},
+    {"id": "ladrillo_2x6", "pieza": "ladrillo_2x6", "color": "verde",       "pos": [0, 4]},
+    {"id": "placa_1x4",    "pieza": "placa_1x4",    "color": "verde_lima",  "pos": [7, 4]},
+    {"id": "placa_2x4",    "pieza": "placa_2x4",    "color": "beige",       "pos": [12, 4]},
+    {"id": "placa_4x4",    "pieza": "placa_4x4",    "color": "gris_claro",  "pos": [17, 2]},
+    {"id": "baldosa_1x2",  "pieza": "baldosa_1x2",  "color": "negro",       "pos": [0, 1]},
+    {"id": "baldosa_2x2",  "pieza": "baldosa_2x2",  "color": "blanco",      "pos": [3, 0]},
+    {"id": "transparente", "pieza": "ladrillo_2x2", "color": "transparente", "pos": [7, 0]},
+    {"id": "gris_oscuro",  "pieza": "ladrillo_1x2", "color": "gris_oscuro", "pos": [10, 1]},
+    {"id": "marron",       "pieza": "placa_1x4",    "color": "marron",      "pos": [13, 1]}
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "nombre": "casita",
+  "descripcion": "Una casita sobre una placa base 8x12: muros de ladrillos 1xN en aparejo (las juntas se alternan entre hiladas), ventanas transparentes, dintel sobre la puerta, tejado de placa con baldosas y chimenea, camino de baldosas, un árbol y dos piezas sueltas en el suelo.",
+  "camara": {"azimut": 36, "elevacion": 33, "lente": 70, "margen": 0.06, "enfoque": "puerta_dintel", "apertura": 32},
+  "fondo": "#ECEDEF",
+  "piezas": [
+    {"id": "base", "pieza": "placa_8x12", "color": "verde", "pos": [0, 0]},
+
+    {"id": "h1_frente_izq", "pieza": "ladrillo_1x4", "color": "blanco", "pos": [1, 1], "nivel": 1},
+    {"id": "h1_frente_der", "pieza": "ladrillo_1x2", "color": "blanco", "pos": [7, 1], "nivel": 1},
+    {"id": "h1_fondo_izq",  "pieza": "ladrillo_1x4", "color": "blanco", "pos": [1, 6], "nivel": 1},
+    {"id": "h1_fondo_der",  "pieza": "ladrillo_1x4", "color": "blanco", "pos": [5, 6], "nivel": 1},
+    {"id": "h1_lado_izq",   "pieza": "ladrillo_1x4", "color": "blanco", "pos": [1, 2], "nivel": 1, "rot": 90},
+    {"id": "h1_lado_der",   "pieza": "ladrillo_1x4", "color": "blanco", "pos": [8, 2], "nivel": 1, "rot": 90},
+
+    {"id": "h2_frente_izq", "pieza": "ladrillo_1x3", "color": "blanco", "pos": [2, 1], "nivel": 4},
+    {"id": "h2_frente_der", "pieza": "ladrillo_1x1", "color": "blanco", "pos": [7, 1], "nivel": 4},
+    {"id": "h2_fondo",      "pieza": "ladrillo_1x6", "color": "blanco", "pos": [2, 6], "nivel": 4},
+    {"id": "h2_izq_a",      "pieza": "ladrillo_1x2", "color": "blanco", "pos": [1, 1], "nivel": 4, "rot": 90},
+    {"id": "ventana_izq",   "pieza": "ladrillo_1x2", "color": "transparente", "pos": [1, 3], "nivel": 4, "rot": 90},
+    {"id": "h2_izq_b",      "pieza": "ladrillo_1x2", "color": "blanco", "pos": [1, 5], "nivel": 4, "rot": 90},
+    {"id": "h2_der_a",      "pieza": "ladrillo_1x2", "color": "blanco", "pos": [8, 1], "nivel": 4, "rot": 90},
+    {"id": "ventana_der",   "pieza": "ladrillo_1x2", "color": "transparente", "pos": [8, 3], "nivel": 4, "rot": 90},
+    {"id": "h2_der_b",      "pieza": "ladrillo_1x2", "color": "blanco", "pos": [8, 5], "nivel": 4, "rot": 90},
+
+    {"id": "h3_frente_izq", "pieza": "ladrillo_1x4", "color": "blanco", "pos": [1, 1], "nivel": 7},
+    {"id": "puerta_dintel", "pieza": "ladrillo_1x4", "color": "blanco", "pos": [5, 1], "nivel": 7},
+    {"id": "h3_fondo_izq",  "pieza": "ladrillo_1x4", "color": "blanco", "pos": [1, 6], "nivel": 7},
+    {"id": "h3_fondo_der",  "pieza": "ladrillo_1x4", "color": "blanco", "pos": [5, 6], "nivel": 7},
+    {"id": "h3_lado_izq",   "pieza": "ladrillo_1x4", "color": "blanco", "pos": [1, 2], "nivel": 7, "rot": 90},
+    {"id": "h3_lado_der",   "pieza": "ladrillo_1x4", "color": "blanco", "pos": [8, 2], "nivel": 7, "rot": 90},
+
+    {"id": "tejado",        "pieza": "placa_6x8", "color": "rojo", "pos": [1, 1], "nivel": 10},
+    {"id": "teja_1",        "pieza": "baldosa_2x4", "color": "gris_oscuro", "pos": [1, 1], "nivel": 11},
+    {"id": "teja_2",        "pieza": "baldosa_2x4", "color": "gris_oscuro", "pos": [1, 5], "nivel": 11},
+    {"id": "teja_3",        "pieza": "baldosa_2x2", "color": "gris_oscuro", "pos": [1, 3], "nivel": 11},
+    {"id": "chimenea_1",    "pieza": "ladrillo_1x1", "color": "rojo", "pos": [6, 4], "nivel": 11},
+    {"id": "chimenea_2",    "pieza": "ladrillo_1x1", "color": "rojo", "pos": [6, 4], "nivel": 14},
+
+    {"id": "umbral",        "pieza": "baldosa_1x2", "color": "beige", "pos": [5, 1], "nivel": 1},
+    {"id": "camino",        "pieza": "baldosa_1x2", "color": "gris_claro", "pos": [5, 0], "nivel": 1},
+
+    {"id": "tronco_1",      "pieza": "ladrillo_1x1", "color": "marron", "pos": [10, 5], "nivel": 1},
+    {"id": "tronco_2",      "pieza": "ladrillo_1x1", "color": "marron", "pos": [10, 5], "nivel": 4},
+    {"id": "copa",          "pieza": "ladrillo_2x2", "color": "verde", "pos": [10, 4], "nivel": 7},
+    {"id": "copa_alta",     "pieza": "placa_2x2", "color": "verde_lima", "pos": [10, 4], "nivel": 10},
+    {"id": "flor_roja",     "pieza": "placa_1x1", "color": "rojo", "pos": [10, 1], "nivel": 1},
+    {"id": "flor_amarilla", "pieza": "placa_1x1", "color": "amarillo", "pos": [11, 2], "nivel": 1},
+
+    {"id": "suelta_amarilla", "pieza": "ladrillo_2x2", "color": "amarillo", "pos": [-3.6, -3.4], "angulo": 22},
+    {"id": "suelta_azul",     "pieza": "ladrillo_1x2", "color": "azul", "pos": [13.2, -2.6], "angulo": -28}
+  ]
+}

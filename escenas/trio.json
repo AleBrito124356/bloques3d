@@ -1,0 +1,11 @@
+{
+  "nombre": "trio",
+  "descripcion": "El plano original, bien hecho: el ladrillo blanco encajado de verdad sobre el azul (2 studs hacia atrás a lo largo y 1 fila hacia un lado, como en la escena original) y el rojo suelto y girado en el suelo. Todo apoya en z = 0 o sobre studs.",
+  "camara": {"azimut": 30, "elevacion": 30, "lente": 70, "margen": 0.07, "enfoque": "azul", "apertura": 22},
+  "fondo": "#EDEDEF",
+  "piezas": [
+    {"id": "azul",   "pieza": "ladrillo_2x4", "color": "azul",   "pos": [0, 0]},
+    {"id": "blanco", "pieza": "ladrillo_2x4", "color": "blanco", "pos": [-2, 1], "nivel": 3},
+    {"id": "rojo",   "pieza": "ladrillo_2x4", "color": "rojo",   "pos": [3.4, -2.6], "angulo": 9}
+  ]
+}
